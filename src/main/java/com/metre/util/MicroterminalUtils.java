@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,7 @@ public class MicroterminalUtils extends Thread {
                 dados = 0;
             } while (dados != 0);
             socket.close();
+        } catch (SocketException s) {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -119,13 +121,13 @@ public class MicroterminalUtils extends Thread {
                 novoPedido();
             }
         } else {
-            if (!codProd.trim().isEmpty()) {
+            if (codProd != null && !codProd.trim().isEmpty()) {
                 String qtde = getQuantidade();
                 PedidoItemPojo item = new PedidoItemPojo(Integer.parseInt(codProd.trim()), new BigDecimal(qtde.trim().replace(",", ".")));
                 System.out.println(item);
                 itens.add(item);
             } else if (microterminal.getValidaLancamentos()) {
-                String retorno = microTerminalFactory.getInput(trataLinhasDisplay("Deseja registrar o Pedido\nConfirmar (1=Sim 0=Não):"), "9", input, output);
+                String retorno = microTerminalFactory.getInput(trataLinhasDisplay("Deseja Registrar o Pedido\nConfirmar (1=Sim 0=Não):"), "9", input, output);
                 System.out.println("Ret regPedido: " + retorno);
                 lancaProximo = retorno.trim().equals("0");
             } else {

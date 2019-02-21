@@ -26,7 +26,7 @@ public class Main {
                         vetorDeTerminais.remove(i);
                     }
                 }
-                Microterminal micro = new Microterminal("localhost", "R", "1001", "TCP", Boolean.FALSE, Boolean.FALSE, MicroterminaEnum.WILBOR_44);
+                Microterminal micro = new Microterminal("localhost", "R", "1001", "TCP", Boolean.FALSE, Boolean.TRUE, MicroterminaEnum.WILBOR_44);
                 MicroterminalUtils thread = new MicroterminalUtils(micro, socket);
                 vetorDeTerminais.add(thread);
                 thread.start();

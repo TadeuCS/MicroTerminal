@@ -27,15 +27,14 @@ import java.util.List;
  */
 public class MicroterminalUtils extends Thread {
 
-    public String MeuIP;
+    public String ipTerminalConectado = "";
 
-    private Socket socket;
-    private int linhas;
-    private int colunas;
+    private FacadeMicroterminal microTerminalFactory;
+    private final Microterminal microterminal;
+    private final Socket socket;
     private InputStream input;
     private OutputStream output;
-    private FacadeMicroterminal microTerminalFactory;
-    private Microterminal microterminal;
+    private int colunas;
 
     private Integer conta = 0;
     private Integer atendente = 0;
@@ -49,15 +48,12 @@ public class MicroterminalUtils extends Thread {
 
     @Override
     public void run() {
-        //String MeuIP;
-        MeuIP = "";
-        int dados;
+        int dados = 0;
         try {
             input = socket.getInputStream();
             output = socket.getOutputStream();
-            MeuIP = socket.getRemoteSocketAddress().toString();
-            System.out.println("Terminal conectado: " + MeuIP);
-            dados = 0;
+            ipTerminalConectado = socket.getRemoteSocketAddress().toString();
+            System.out.println("Terminal conectado: " + ipTerminalConectado);
             do {
                 do {
                     novoPedido();
@@ -69,7 +65,7 @@ public class MicroterminalUtils extends Thread {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        System.out.println("Terminal desconectado:" + MeuIP);
+        System.out.println("Terminal desconectado:" + ipTerminalConectado);
     }
 
     private String getConta() throws IOException {

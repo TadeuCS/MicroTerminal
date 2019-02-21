@@ -21,7 +21,7 @@ public class Main {
                 Socket socket = serverSocket.accept();
                 for (int i = 0; i < vetorDeTerminais.size(); i++) {
                     MicroterminalUtils itemDoVetor = (MicroterminalUtils) vetorDeTerminais.get(i);
-                    if (socket.getRemoteSocketAddress().toString().equals(itemDoVetor.MeuIP)) {
+                    if (socket.getRemoteSocketAddress().toString().equals(itemDoVetor.ipTerminalConectado)) {
                         itemDoVetor = null;
                         vetorDeTerminais.remove(i);
                     }
